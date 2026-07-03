@@ -1,0 +1,37 @@
+[
+  {
+    "id": 1,
+    "name": "Procesador Intel i7",
+    "price": 300,
+    "category": "Procesadores",
+    "stock": 10
+  },
+  {
+    "id": 2,
+    "name": "Tarjeta Gráfica RTX 3080",
+    "price": 800,
+    "category": "Tarjetas Gráficas",
+    "stock": 5
+  },
+  {
+    "id": 3,
+    "name": "Memoria RAM 16GB",
+    "price": 100,
+    "category": "Memorias",
+    "stock": 20
+  },
+  {
+    "id": 4,
+    "name": "Disco Duro SSD 1TB",
+    "price": 150,
+    "category": "Almacenamiento",
+    "stock": 15
+  },
+  {
+    "id": 5,
+    "name": "Gabinete Gamer RGB",
+    "price": 180,
+    "category": "Gabinetes",
+    "stock": 15
+  }
+]
