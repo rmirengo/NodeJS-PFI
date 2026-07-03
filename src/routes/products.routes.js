@@ -7,32 +7,21 @@ import {
     updateProduct,
     deleteProduct
  } from '../controllers/products.controller.js'; // Importamos el controlador de productos
-
+import { authMiddleware } from '../middlewares/auth.middleware.js';
 
 // utilizamos Router() para crear un mini servidor especifico para productos
 const router = express.Router();
 
-// router.get('/products', (req, res) => {
-//     res.json({ message: 'Pronto veras el catalogo aqui'});
-// });
-
 //Rutas Publicas
-// ruta para obtener todos los productos
-router.get('/products', getAllProducts); // Usamos el controlador para manejar la ruta de productos
-// ruta para obtener un producto por su id
-router.get('/products/:id', getProductById); // Usamos el controlador para manejar la ruta de detalle de producto
-// ruta para obtener productos por categoría
-router.get('/products/category/:category', getProductsByCategory); // Usamos el controlador para manejar la ruta de productos por categoría
+// Rutas para obtener los productos general, por id y por categoria
+router.get('/', getAllProducts); // Usamos el controlador para manejar la ruta de productos
+router.get('/:id', getProductById); // Usamos el controlador para manejar la ruta de detalle de producto
+router.get('/category/:category', getProductsByCategory); // Usamos el controlador para manejar la ruta de productos por categoría
 
 //Rutas Protegidas
-//ruta para crear un producto
-router.post('/products/create', createProduct);
-
-//ruta para actualizar un producto
-router.put('/products/:id', updateProduct);
-
-//ruta para elimnar productos, con middleware de autenticación
-router.delete('/products/:id', deleteProduct);
-
+//Rutas para Crear, modificar y eliminar un producto
+router.post('/', authMiddleware, createProduct);
+router.put('/:id', authMiddleware, updateProduct);
+router.delete('/:id', authMiddleware, deleteProduct);
 
 export default router;

@@ -1,39 +1,51 @@
 import express from 'express';
 import cors from 'cors';
 import 'dotenv/config'; //Carga las variables de entorno desde el inicio
+
+// importacion de rutas
 import productsRoutes from './routes/products.routes.js'; // Importamos las rutas de productos
+import authRoutes from './routes/auth.routes.js'; // rutas de login
 
 const app = express();
 const PORT = process.env.PORT || 3000; // Flexibilidad para producción y desarrollo
 
-//Middlewares
+//Middlewares globales
+//1. Seguridad y formato
 app.use(cors({
     origin: ["*"],
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"]
 
-})); // Permite que otros dominios puedan hacer consultas a nuestra API
+})); 
+app.use(express.json());
 
-app.use(express.json()); // Permite a nuestra API recibir datos en formato JSON
-
-app.use('/api', productsRoutes); // Usamos las rutas de productos bajo el prefijo /api
-
+//2. Log de solicitudes
 app.use((req, res, next) => {
     console.log(`Datos recibidos: ${req.method} ${req.url}`); // Log de las solicitudes entrantes
     next(); // Pasamos al siguiente middleware o ruta
 });
 
-//Rutas
+
+//Definicion de Rutas
+//Ruta de prueba
 app.get('/ping', (req, res) => {
-    res.send('pong'); // Endpoint de prueba para verificar que la API está funcionando
+    res.send('pong');
 });
+
+//Rutas de la Api
+app.use('/api/products', productsRoutes); // Usamos las rutas de productos bajo el prefijo /api
+app.use('/api/auth', authRoutes);
+
+//Manejo de Errores
 
 app.use(function (req, res, next) {
     res.status(404)
     res.send("Ruta no Encontrada")
 });
 
-//const PORT = process.env.PORT || 3000; // Flexibilidad para producción y desarrollo
+//Arranque del servidor
 app.listen(PORT, () => {
-    console.log(`El servidor esta corriendo en el puerto http://localhost:${PORT}`); // Mensaje en consola indicando que el servidor está corriendo 
+    console.log(`================================================================`);
+    console.log(`El servidor esta corriendo en el puerto http://localhost:${PORT}`);
+    console.log(`================================================================`);
 });
